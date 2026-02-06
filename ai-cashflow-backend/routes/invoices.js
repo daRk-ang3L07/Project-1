@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const InvoiceController = require('../controllers/InvoiceController');
+const authenticate = require('../middleware/auth');
 
-// No middleware needed - we'll pass userId in request body
+// Apply authentication to all invoice routes
+router.use(authenticate);
 
 // GET /api/invoices - Get all invoices for the user
 router.get('/', InvoiceController.getInvoices);

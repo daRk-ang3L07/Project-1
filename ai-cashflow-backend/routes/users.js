@@ -5,6 +5,9 @@ const UserController = require('../controllers/UserController');
 // POST /api/users - Create new user (business owner)
 router.post('/', UserController.createUser);
 
+// POST /api/users/login - Login user
+router.post('/login', UserController.loginUser);
+
 // GET /api/users - Get all users
 router.get('/', UserController.getUsers);
 

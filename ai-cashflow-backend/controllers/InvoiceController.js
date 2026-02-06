@@ -5,7 +5,6 @@ class InvoiceController {
   static async createInvoice(req, res) {
     try {
       const {
-        userId,
         clientId,
         invoiceNumber,
         amount,
@@ -16,9 +15,29 @@ class InvoiceController {
         fileUrl
       } = req.body;
 
+      // Get userId from authenticated token, NOT from request body
+      const userId = req.user.id;
+
+      // Verify that the client belongs to this user (security check)
+      if (clientId) {
+        const client = await Client.findOne({
+          where: { 
+            id: clientId, 
+            userId: userId 
+          }
+        });
+        
+        if (!client) {
+          return res.status(404).json({
+            success: false,
+            message: 'Client not found or does not belong to you'
+          });
+        }
+      }
+
       // Create invoice - only set fields that are required or provided
       const invoice = await Invoice.create({
-        userId,
+        userId,  // Now comes from req.user.id
         clientId: clientId || null, // Optional field
         invoiceNumber: invoiceNumber || null, // Optional field  
         amount,

@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const PaymentHistoryController = require('../controllers/PaymentHistoryController');
+const authenticate = require('../middleware/auth');
+
+// Apply authentication to all payment history routes
+router.use(authenticate);
 
 // POST /api/payment-history - Create payment history record
 router.post('/', PaymentHistoryController.createPaymentHistory);

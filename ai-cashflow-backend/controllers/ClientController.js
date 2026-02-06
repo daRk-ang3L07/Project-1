@@ -4,10 +4,11 @@ class ClientController {
   // Create a new client
   static async createClient(req, res) {
     try {
-      const { userId, name, email, phone, address } = req.body;
+      const { name, email, phone, address } = req.body;
+      const userId = req.user.id;
 
-      if (!userId || !name) {
-        return res.status(400).json({ success: false, message: 'userId and name are required' });
+      if (!name) {
+        return res.status(400).json({ success: false, message: 'name is required' });
       }
 
       const client = await Client.create({ userId, name, email, phone, address });
@@ -21,9 +22,8 @@ class ClientController {
   // Get all clients for a user (or all if no filter)
   static async getClients(req, res) {
     try {
-      const { userId } = req.query;
-      const where = {};
-      if (userId) where.userId = userId;
+      const userId = req.user.id;
+      const where = { userId };
 
       const clients = await Client.findAll({ where, order: [['createdAt', 'DESC']] });
 
