@@ -4,12 +4,14 @@ const router = express.Router();
 // Import route modules
 const invoiceRoutes = require('./invoices');
 const userRoutes = require('./users');
-// const clientRoutes = require('./clients');
+const clientRoutes = require('./clients');
+const paymentHistoryRoutes = require('./paymentHistory');
 
 // Mount routes
 router.use('/invoices', invoiceRoutes);
 router.use('/users', userRoutes);
-// router.use('/clients', clientRoutes);
+router.use('/clients', clientRoutes);
+router.use('/payment-history', paymentHistoryRoutes);
 
 // Health check endpoint
 router.get('/health', (req, res) => {
