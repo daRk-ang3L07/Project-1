@@ -6,12 +6,14 @@ const invoiceRoutes = require('./invoices');
 const userRoutes = require('./users');
 const clientRoutes = require('./clients');
 const paymentHistoryRoutes = require('./paymentHistory');
+const dashboardRoutes = require('./dashboard');
 
 // Mount routes
 router.use('/invoices', invoiceRoutes);
 router.use('/users', userRoutes);
 router.use('/clients', clientRoutes);
 router.use('/payment-history', paymentHistoryRoutes);
+router.use('/dashboard', dashboardRoutes);
 
 // Health check endpoint
 router.get('/health', (req, res) => {
